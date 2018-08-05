@@ -2,7 +2,6 @@
 #include <cmath>
 #include "figure.h"
 #include "vec.h"
-
 static const int VERTEX = 100;
 static const float PI = 3.14159;
 
@@ -10,7 +9,7 @@ void ColoredFig::randomColor() {
     r = (float) rand() / RAND_MAX; g = (float) rand() / RAND_MAX; b = (float) rand() / RAND_MAX;
 }
 
-void Quadrilateral::draw() {
+void Quadrilateral::draw(int space) {
     glColor3f(r, g, b);
     glBegin(GL_QUADS);
     glVertex2f(p1.getX(),p1.getY()); glVertex2f(p2.getX(),p2.getY());
@@ -32,7 +31,7 @@ void Quadrilateral::zoom(float k) {
     p3 = ((p3 - getAnchor()) * k) + getAnchor(); p4 = ((p4 - getAnchor()) * k) + getAnchor();
 }
 
-void Circle::draw() {
+void Circle::draw(int space) {
     glColor3f(r, g, b);
     glBegin(GL_POLYGON);
     for (int i = 0; i < VERTEX; i++)
@@ -46,7 +45,7 @@ void Circle::rotate(float angle) { center = ((center - getAnchor()) << angle) + 
 
 void Circle::zoom(float k) { center = ((center - getAnchor()) * k) + getAnchor(); radius *= k; }
 
-void Semicircle::draw() {
+void Semicircle::draw(int space) {
     glColor3f(r, g, b);
     glBegin(GL_POLYGON);
     Vec tmp = p1 - center;
@@ -66,7 +65,7 @@ void Semicircle::rotate(float angle) {
 
 void Semicircle::zoom(float k) { center = ((center - getAnchor()) * k) + getAnchor(); radius *= k; }
 
-void Line::draw() {
+void Line::draw(int space) {
     glColor3f(r, g, b);
     glLineWidth(width);
     glBegin(GL_LINES);
@@ -89,26 +88,26 @@ void Line::zoom(float k) {
 
 Teleporter::Teleporter(int space) : telep({0,0},{0,0},{0,0},{0,0},{0,0},0.5,0.5,0.5){
     float w = 0.16, h = 0.26, x , y;
-    if (space <= 5) { x = -0.48 + 0.2 * space; y = 0.52; }
+    if (space < 5) { x = -0.48 + 0.2 * space; y = 0.52; }
     else { x = -0.48 + 0.2 * (space - 5); y = -0.58; }
     telep.setPosition({x,y},{x+w,y},{x+w,y+h},{x,y+h});
     telep.randomColor();
 }
 
-void Teleporter::draw() {
+void Teleporter::draw(int space) {
     static int flag = 0;
     flag++;
     if (flag >= 20) {
         telep.randomColor();
         flag = 0;
     }
-    telep.draw();
+    telep.draw(0);
 }
 
 Rocket::Rocket(int space) {
     float x, y;
     height = 0.28;
-    if (space <= 5) { x = -0.4 + 0.2 * space; y = 0.65; }
+    if (space < 5) { x = -0.4 + 0.2 * space; y = 0.65; }
     else { x = -0.4 + 0.2 * (space - 5); y = -0.45; }
     Vec c = {x,y}; //center, i.e., anchor
     setAnchor(c); head.setAnchor(c); wing1.setAnchor(c); wing2.setAnchor(c); body.setAnchor(c);
@@ -131,7 +130,7 @@ Rocket::Rocket(int space) {
     mouth.setColor(0,161,233);
 }
 
-void Rocket::draw() {
+void Rocket::draw(int space) {
     static int flag = 0;
     if (height >= 0.14 && flag == 0)
         zoom(0.99);
@@ -141,8 +140,8 @@ void Rocket::draw() {
     }
     else
         flag = 0;
-    head.draw(); wing1.draw(); wing2.draw(); body.draw();
-    eye1.draw(); eye2.draw(); mouth.draw(); tail.draw();
+    head.draw(0); wing1.draw(0); wing2.draw(0); body.draw(0);
+    eye1.draw(0); eye2.draw(0); mouth.draw(0); tail.draw(0);
 }
 
 void Rocket::zoom(float k) {
@@ -152,7 +151,7 @@ void Rocket::zoom(float k) {
 
 UFO::UFO(int space) {
     float x, y;
-    if (space <= 5) { x = -0.4 + 0.2 * space; y = 0.65; }
+    if (space <5) { x = -0.4 + 0.2* space; y = 0.65; }
     else { x = -0.4 + 0.2 * (space - 5); y = -0.45; }
     Vec c = {x,y}; //center, i.e., anchor
     setAnchor(c); sc.setAnchor(c);; l1.setAnchor(c); l2.setAnchor(c); t1.setAnchor(c); t2.setAnchor(c);
@@ -168,8 +167,8 @@ UFO::UFO(int space) {
     t2.setColor(255,241,0);
 }
 
-void UFO::draw() {
-    l1.draw(); l2.draw(); sc.draw(); t1.draw(); t2.draw();
+void UFO::draw(int p) {
+    l1.draw(0); l2.draw(0); sc.draw(0); t1.draw(0); t2.draw(0);
     rotate(0.01);
 }
 void UFO::rotate(float angle) {
@@ -184,9 +183,9 @@ Rod::Rod() {
     l.setWidth(2);
 }
 
-void Rod::draw() {
+void Rod::draw(int space) {
     static int timer = 0;
-    l.draw();
+    l.draw(0);
     if (timer < 80)
         rotate(-PI / 160.0);
     else if (timer >= 240 && timer <= 320)
@@ -213,8 +212,34 @@ Car::Car() {
     rotate(PI / 2.0);
 }
 
-void Car::draw() {
-    cap.draw(); body.draw(); wheel1.draw(); wheel2.draw();
+void Car::draw(int space) {
+    cap.draw(0); body.draw(0); wheel1.draw(0); wheel2.draw(0);
+    Vec dir1={0,0.006}; Vec dir2={0.01+0.2*(space-6)/40,0};Vec dir3={0.023,0};Vec dir4={0,0.01};Vec dir5={-0.005-0.2*(4-space)/40,0};
+    Vec turn1={-0.5,-0.3}; Vec turn2={0.5,0.05}; Vec turn3={0.5,0.15};
+    Vec parkturn1={-0.3+0.2*(space-5)-0.02,-0.25};Vec parkturn2={0.5-((5-space)*0.2)-0.04,0.5};
+    Vec rev1={0,-0.014};Vec rev2={0,0.01};
+    static int timer = 0;
+    if (space>=5&space<=9) {
+        if (timer >= 80 && timer <= 180) move(dir1);
+        if (timer > 180 && timer <= 260) rotate2(-PI / 160.0, turn1);
+        if (timer > 260 && timer <= 300) move(dir2);
+        if (timer > 300 && timer <= 380) rotate2(PI / 160.0, parkturn1);
+        if (timer > 380 && timer <= 400) move(rev1);
+        timer++;
+    }
+    if (space<=4){
+        if (timer >= 80 && timer <= 180) move(dir1);
+        if (timer > 180 && timer <= 260) rotate2(-PI / 160.0, turn1);
+        if (timer>260&&timer<=300) move(dir3);
+        if (timer>300&&timer<=380) rotate2(PI/160.0,turn2);
+        if (timer>380&&timer<=400) move(dir4);
+        if (timer>400&&timer<=480) rotate2(PI/160.0,turn3);
+        if (timer>480&&timer<=520) move(dir5);
+        if (timer>520&&timer<=600) rotate2(PI/160.0,parkturn2);
+        if (timer>600&&timer<=620) move(rev2);
+        timer ++;
+        }
+
 }
 
 void Car::move(Vec dir) {
@@ -231,3 +256,4 @@ void Car::rotate2(float angle, Vec point) {
     rotate(angle);
     setAnchor(tmp); cap.setAnchor(tmp); body.setAnchor(tmp); wheel1.setAnchor(tmp); wheel2.setAnchor(tmp);
 }
+
