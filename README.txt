@@ -48,6 +48,7 @@ Comment:
 
 
 *****part 2*****
+Environment: Windows 10 x64, Clion 2018.1.3.
 1.diagram:
 We have two parts here.
 <ONE> diagram for basic drawing
