@@ -1,5 +1,6 @@
 #include <GL/freeglut.h>
 #include <cmath>
+#include <ctime>
 #include "figure.h"
 #include "vec.h"
 static const int VERTEX = 100;
@@ -97,9 +98,8 @@ Teleporter::Teleporter(int space) : telep({0,0},{0,0},{0,0},{0,0},{0,0},0.5,0.5,
 void Teleporter::draw(int space) {
     static int flag = 0;
     flag++;
-    if (flag >= 20) {
+    if (flag % 17 == 0) {
         telep.randomColor();
-        flag = 0;
     }
     telep.draw(0);
 }
@@ -201,7 +201,7 @@ Car::Car() {
     float x = -0.65, y = -0.85;
     Vec c = {x,y};
     setAnchor(c); cap.setAnchor(c); body.setAnchor(c); wheel1.setAnchor(c); wheel2.setAnchor(c);
-    cap.setPosition({x-(float)0.08,y+(float)0.02},{x+(float)0.08,y+(float)0.02},{x+(float)0.04,y+(float)0.08},{x-(float)0.04,y+(float)0.08});
+    cap.setPosition({x-(float)0.08,y+(float)0.02},{x+(float)0.08,y+(float)0.02},{x+(float)0.04,y+(float)0.07},{x-(float)0.04,y+(float)0.07});
     cap.setColor(127,127,255);
     body.setPosition({x-(float)0.12,y-(float)0.08},{x+(float)0.12,y-(float)0.08},{x+(float)0.12,y+(float)0.02},{x-(float)0.12,y+(float)0.02});
     body.setColor(255,191,127);
@@ -214,32 +214,32 @@ Car::Car() {
 
 void Car::draw(int space) {
     cap.draw(0); body.draw(0); wheel1.draw(0); wheel2.draw(0);
-    Vec dir1={0,0.006}; Vec dir2={0.01+0.2*(space-6)/40,0};Vec dir3={0.023,0};Vec dir4={0,0.01};Vec dir5={-0.005-0.2*(4-space)/40,0};
+    Vec dir1={0,0.006}; Vec dir2={(float)0.01+(float)0.2*(space-6)/40,0};
+    Vec dir3={0.023,0};Vec dir4={0,0.01};Vec dir5={(float)-0.005-(float)0.2*(4-space)/40,0};
     Vec turn1={-0.5,-0.3}; Vec turn2={0.5,0.05}; Vec turn3={0.5,0.15};
-    Vec parkturn1={-0.3+0.2*(space-5)-0.02,-0.25};Vec parkturn2={0.5-((5-space)*0.2)-0.04,0.5};
+    Vec parkturn1={(float)(-0.3+0.2*(space-5)-0.02),-0.25};
+    Vec parkturn2={(float)(0.5-((5-space)*0.2)-0.04),0.5};
     Vec rev1={0,-0.014};Vec rev2={0,0.01};
     static int timer = 0;
-    if (space>=5&space<=9) {
+    if (space>=5 && space<=9) {
         if (timer >= 80 && timer <= 180) move(dir1);
         if (timer > 180 && timer <= 260) rotate2(-PI / 160.0, turn1);
         if (timer > 260 && timer <= 300) move(dir2);
         if (timer > 300 && timer <= 380) rotate2(PI / 160.0, parkturn1);
         if (timer > 380 && timer <= 400) move(rev1);
-        timer++;
     }
     if (space<=4){
         if (timer >= 80 && timer <= 180) move(dir1);
         if (timer > 180 && timer <= 260) rotate2(-PI / 160.0, turn1);
-        if (timer>260&&timer<=300) move(dir3);
-        if (timer>300&&timer<=380) rotate2(PI/160.0,turn2);
-        if (timer>380&&timer<=400) move(dir4);
-        if (timer>400&&timer<=480) rotate2(PI/160.0,turn3);
-        if (timer>480&&timer<=520) move(dir5);
-        if (timer>520&&timer<=600) rotate2(PI/160.0,parkturn2);
-        if (timer>600&&timer<=620) move(rev2);
-        timer ++;
+        if (timer > 260 && timer <= 300) move(dir3);
+        if (timer > 300 && timer <= 380) rotate2(PI/160.0,turn2);
+        if (timer > 380 && timer <= 400) move(dir4);
+        if (timer > 400 && timer <= 480) rotate2(PI/160.0,turn3);
+        if (timer > 480 && timer <= 520) move(dir5);
+        if (timer > 520 && timer <= 600) rotate2(PI/160.0,parkturn2);
+        if (timer > 600 && timer <= 620) move(rev2);
         }
-
+    timer++;
 }
 
 void Car::move(Vec dir) {
@@ -256,4 +256,3 @@ void Car::rotate2(float angle, Vec point) {
     rotate(angle);
     setAnchor(tmp); cap.setAnchor(tmp); body.setAnchor(tmp); wheel1.setAnchor(tmp); wheel2.setAnchor(tmp);
 }
-

@@ -1,28 +1,13 @@
-part 2
+***********README FOR VG101 Project 3************
 
-vec.cpp/.h
-figure.cpp/.h
-park.cpp/.h
-main.cpp/.h
-last updated 2018/8/6 9:45 by shenzhuowen
+VG101 2018SU Project 3 Group 14
+Contributors:
+	Shi Li 		517370910032
+	Yuan Fangqi 	517370910206
+	Tang Yiyang 	517370910041
+	Shen Zhuowen 	517370910057
 
-notes:
-1. remember to free the memory
-2. use polymorphism!!!!
-3. in Car class, rotate() - rotate around itself, rotate2() - rotate around a certain point
-4. remember to randomly generate the UFOs, rockets, teleporters
-5. If you have any problems, please contact me! I'm free on Sunday (except 4:00~5:00 pm) and Monday (after 1:00 pm)
-shili
-
-***********README FOR THE PROJECT************
-
-Group member:
-Shi Li 517370910032
-Yuan Fangqi 517370910206
-Tang Yiyang 517370910041
-Shen Zhuowen 517370910057
-
-*****part 1*****
+*****Part 1*****
 1.in part1.h file,we mainly use a vector with the data type of struct (vector<struct>)
 
 [parklot]:
@@ -65,12 +50,9 @@ Comment:
 
 
 
-*****part 2*****
-1.diagram:
-Group<-------Figure-------->Colorfig
-Group: [car] [ufo] [rocket][teleporter] [rod]
-Colorfig: [Line] [Semicircle] [Circle] [Quadrilateral]
-(Here we take the triangle as a special quadrilateral that two corners coincide)
+*****Part 2*****
+1.The hierarchy diagram for the classes can be found in diagram.jpg.
+
 2.detailed attributes and methods are explained below:
 (Contained in file figure.h)
 Figure:

@@ -1,6 +1,8 @@
 #ifndef DRAFT2_FIGURE_H
 #define DRAFT2_FIGURE_H
 
+// The hierarchy diagram is in diagram.jpg.
+
 #include <vector>
 #include <cmath>
 #include "vec.h"
@@ -107,10 +109,10 @@ class Group : public Figure{
 public:
     Group() {};
     virtual void draw(int space) = 0;
-    virtual void move(Vec dir) = 0;
+    virtual void move(Vec dir) = 0 ;
     virtual void rotate(float angle) = 0;
     virtual void zoom(float k) = 0;
-    ~Group() {};
+    virtual ~Group() = default;
 };
 
 class Teleporter : public Group{
@@ -122,6 +124,7 @@ public:
     void move(Vec dir) {}
     void rotate(float angle) {}
     void zoom(float k) {}
+    ~Teleporter() = default;
 };
 
 class Rocket : public Group{
@@ -134,6 +137,7 @@ public:
     void move(Vec dir) {}
     void rotate(float angle) {}
     void zoom(float k);
+    ~Rocket() = default;
 };
 
 class UFO : public Group{
@@ -147,6 +151,7 @@ public:
     void move(Vec dir) {}
     void rotate(float angle);
     void zoom(float k) {}
+    ~UFO() = default;
 };
 
 class Rod : public Group{
@@ -158,6 +163,7 @@ public:
     void move(Vec dir) {}
     void rotate(float angle);
     void zoom(float k) {}
+    ~Rod() = default;
 };
 
 class Car : public Group{
@@ -171,5 +177,6 @@ public:
     void rotate(float angle);
     void rotate2(float angle, Vec point); //Rotate around a certain point.
     void zoom(float k) {}
+    ~Car() = default;
 };
 #endif //DRAFT2_FIGURE_H

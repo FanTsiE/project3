@@ -6,9 +6,9 @@ void drawPark() {
     glLineWidth(2);
     glBegin(GL_LINES);
     glVertex2f(-0.8,-0.7); glVertex2f(-0.8, 0.8);
-    glVertex2f(-0.8, 0.8); glVertex2f( 0.8,0.8);
-    glVertex2f( 0.8, 0.8); glVertex2f( 0.8,-0.6);
-    glVertex2f( 0.8,-0.6); glVertex2f(-0.5,-0.6);
+    glVertex2f(-0.8, 0.8); glVertex2f( 0.83,0.8);
+    glVertex2f( 0.83, 0.8); glVertex2f( 0.83,-0.6);
+    glVertex2f( 0.83,-0.6); glVertex2f(-0.5,-0.6);
     glVertex2f(-0.5,-0.6); glVertex2f(-0.5,-0.7);
     glEnd();
     glLineWidth(1);
