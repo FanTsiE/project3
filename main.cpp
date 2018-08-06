@@ -19,7 +19,7 @@ void glDraw() {
     *(space+7)=1;
     v[0]->draw(0);
     v.push_back(new Teleporter(2));
-    *(space+2)=1;//The space of car is different from that of the others', so use (space+5/-5) of others
+    *(space+2)=1;
     v[1]->draw(0);
     v.push_back(new UFO(5));
     v[2]->draw(0);
