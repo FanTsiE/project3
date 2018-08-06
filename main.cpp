@@ -37,7 +37,7 @@ void glDraw() {
         }
     }
     v.push_back(new Car());
-    v[4]->draw(6);   //remember to free the memory!!!
+    v[4]->draw(j);   //remember to free the memory!!!
 
     glutSwapBuffers();
     glFlush();
