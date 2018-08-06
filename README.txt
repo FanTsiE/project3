@@ -1,3 +1,4 @@
+Environment: Windows 10 x64, Clion 2018.1.3., C++ Standard 17.
 Group member:
 Shi Li 517370910032
 Yuan Fangqi 517370910206
@@ -48,7 +49,6 @@ Comment:
 
 
 *****part 2*****
-Environment: Windows 10 x64, Clion 2018.1.3.
 1.diagram:
 We have two parts here.
 <ONE> diagram for basic drawing
